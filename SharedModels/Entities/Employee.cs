@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharedModels
+namespace SharedModels.Entidades
 {
     public class Employee
     {
@@ -26,6 +26,6 @@ namespace SharedModels
         public decimal OrdinarySalary { get; set; }
         public bool IsActive { get; set; }
 
-        public List<Payroll>? Payrolls { get; set; }
+        public ICollection<Payroll>? Payrolls { get; set; }
     }
 }

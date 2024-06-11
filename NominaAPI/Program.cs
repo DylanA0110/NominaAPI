@@ -25,5 +25,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-var incomeTypes = Enum.GetNames(typeof(IncomeType));
+
 

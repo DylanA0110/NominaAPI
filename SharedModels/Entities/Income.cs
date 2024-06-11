@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharedModels
+namespace SharedModels.Entidades
 {
     public class Income
     {
@@ -13,8 +13,8 @@ namespace SharedModels
         public decimal OrdinarySalary { get; set; }
         public decimal Seniority { get; set; }
         public decimal OccupationalRisk { get; set; }
-        public decimal NightShift {  get; set; }
+        public decimal NightShift { get; set; }
         public Employee? Employee { get; set; }
-        
+
     }
 }
