@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34701.34
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NominaAPI", "NominaAPI\NominaAPI.csproj", "{175AD055-734E-4D5D-B71C-CA2F83BAFE2F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedModels", "SharedModels\SharedModels.csproj", "{88A12FE0-B8DF-49CB-9DF3-55B3BAF54249}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{175AD055-734E-4D5D-B71C-CA2F83BAFE2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{175AD055-734E-4D5D-B71C-CA2F83BAFE2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{175AD055-734E-4D5D-B71C-CA2F83BAFE2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{175AD055-734E-4D5D-B71C-CA2F83BAFE2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88A12FE0-B8DF-49CB-9DF3-55B3BAF54249}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88A12FE0-B8DF-49CB-9DF3-55B3BAF54249}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88A12FE0-B8DF-49CB-9DF3-55B3BAF54249}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88A12FE0-B8DF-49CB-9DF3-55B3BAF54249}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C0B822CA-F7AC-4D9C-9FA8-64087849F94D}
+	EndGlobalSection
+EndGlobal
