@@ -13,5 +13,7 @@ namespace SharedModels.Entidades
         public decimal INSS { get; set; }
         public decimal IR { get; set; }
         public Employee? Employee { get; set; }
+        public int PayrollId { get; set; }
+        public Payroll? Payroll { get; set; }
     }
 }
