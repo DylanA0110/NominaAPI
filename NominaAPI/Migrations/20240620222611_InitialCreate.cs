@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PayrollAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,7 +15,7 @@ namespace PayrollAPI.Migrations
                 name: "Employees",
                 columns: table => new
                 {
-                    EmployeeId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     EmployeeNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IdentificationNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -36,14 +36,58 @@ namespace PayrollAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Employees", x => x.EmployeeId);
+                    table.PrimaryKey("PK_Employees", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Deductions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    INSS = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    IR = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    EmployeeID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Deductions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Deductions_Employees_EmployeeID",
+                        column: x => x.EmployeeID,
+                        principalTable: "Employees",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Incomes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OrdinarySalary = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Seniority = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    OccupationalRisk = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    NightShift = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    EmployeeID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Incomes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Incomes_Employees_EmployeeID",
+                        column: x => x.EmployeeID,
+                        principalTable: "Employees",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Payrolls",
                 columns: table => new
                 {
-                    PayrollId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     EmployeeId = table.Column<int>(type: "int", nullable: false),
                     StartDate = table.Column<DateOnly>(type: "date", nullable: false),
@@ -52,92 +96,24 @@ namespace PayrollAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Payrolls", x => x.PayrollId);
+                    table.PrimaryKey("PK_Payrolls", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Payrolls_Employees_EmployeeId",
                         column: x => x.EmployeeId,
                         principalTable: "Employees",
-                        principalColumn: "EmployeeId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Deductions",
-                columns: table => new
-                {
-                    DeductionId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    EmployeeId = table.Column<int>(type: "int", nullable: false),
-                    INSS = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    IR = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    PayrollId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Deductions", x => x.DeductionId);
-                    table.ForeignKey(
-                        name: "FK_Deductions_Employees_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employees",
-                        principalColumn: "EmployeeId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Deductions_Payrolls_PayrollId",
-                        column: x => x.PayrollId,
-                        principalTable: "Payrolls",
-                        principalColumn: "PayrollId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Incomes",
-                columns: table => new
-                {
-                    IncomeId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    EmployeeId = table.Column<int>(type: "int", nullable: false),
-                    PayrollId = table.Column<int>(type: "int", nullable: false),
-                    OrdinarySalary = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Seniority = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    OccupationalRisk = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    NightShift = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Incomes", x => x.IncomeId);
-                    table.ForeignKey(
-                        name: "FK_Incomes_Employees_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employees",
-                        principalColumn: "EmployeeId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Incomes_Payrolls_PayrollId",
-                        column: x => x.PayrollId,
-                        principalTable: "Payrolls",
-                        principalColumn: "PayrollId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Deductions_EmployeeId",
+                name: "IX_Deductions_EmployeeID",
                 table: "Deductions",
-                column: "EmployeeId");
+                column: "EmployeeID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Deductions_PayrollId",
-                table: "Deductions",
-                column: "PayrollId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Incomes_EmployeeId",
+                name: "IX_Incomes_EmployeeID",
                 table: "Incomes",
-                column: "EmployeeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Incomes_PayrollId",
-                table: "Incomes",
-                column: "PayrollId");
+                column: "EmployeeID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Payrolls_EmployeeId",

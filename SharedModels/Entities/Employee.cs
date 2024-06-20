@@ -8,7 +8,7 @@ namespace SharedModels.Entidades
 {
     public class Employee
     {
-        public int EmployeeId { get; set; }
+        public int Id { get; set; }
         public string EmployeeNumber { get; set; } = null!;
         public string IdentificationNumber { get; set; } = null!;
         public string INSSNumber { get; set; } = null!;
@@ -23,9 +23,9 @@ namespace SharedModels.Entidades
         public string CellPhone { get; set; } = null!;
         public DateOnly HireDate { get; set; }
         public DateOnly? TerminationDate { get; set; }
-        public decimal OrdinarySalary { get; set; }
         public bool IsActive { get; set; }
-
+        public decimal OrdinarySalary { get; set; }
         public ICollection<Payroll>? Payrolls { get; set; }
+       
     }
 }

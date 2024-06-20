@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SharedModels.Services
 {
-    internal class DeductionCalculationService
+    public class DeductionCalculationService
     {
     }
 }

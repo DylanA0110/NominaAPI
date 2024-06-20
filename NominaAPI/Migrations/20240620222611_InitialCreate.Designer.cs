@@ -12,8 +12,8 @@ using PayrollAPI.Data;
 namespace PayrollAPI.Migrations
 {
     [DbContext(typeof(PayrollContext))]
-    [Migration("20240618220850_initial")]
-    partial class initial
+    [Migration("20240620222611_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,13 +27,13 @@ namespace PayrollAPI.Migrations
 
             modelBuilder.Entity("SharedModels.Entidades.Deduction", b =>
                 {
-                    b.Property<int>("DeductionId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DeductionId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("EmployeeId")
+                    b.Property<int>("EmployeeID")
                         .HasColumnType("int");
 
                     b.Property<decimal>("INSS")
@@ -42,25 +42,20 @@ namespace PayrollAPI.Migrations
                     b.Property<decimal>("IR")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("PayrollId")
-                        .HasColumnType("int");
+                    b.HasKey("Id");
 
-                    b.HasKey("DeductionId");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.HasIndex("PayrollId");
+                    b.HasIndex("EmployeeID");
 
                     b.ToTable("Deductions");
                 });
 
             modelBuilder.Entity("SharedModels.Entidades.Employee", b =>
                 {
-                    b.Property<int>("EmployeeId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EmployeeId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -121,20 +116,20 @@ namespace PayrollAPI.Migrations
                     b.Property<DateOnly?>("TerminationDate")
                         .HasColumnType("date");
 
-                    b.HasKey("EmployeeId");
+                    b.HasKey("Id");
 
                     b.ToTable("Employees");
                 });
 
             modelBuilder.Entity("SharedModels.Entidades.Income", b =>
                 {
-                    b.Property<int>("IncomeId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IncomeId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("EmployeeId")
+                    b.Property<int>("EmployeeID")
                         .HasColumnType("int");
 
                     b.Property<decimal>("NightShift")
@@ -146,28 +141,23 @@ namespace PayrollAPI.Migrations
                     b.Property<decimal>("OrdinarySalary")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("PayrollId")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("Seniority")
                         .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("IncomeId");
+                    b.HasKey("Id");
 
-                    b.HasIndex("EmployeeId");
-
-                    b.HasIndex("PayrollId");
+                    b.HasIndex("EmployeeID");
 
                     b.ToTable("Incomes");
                 });
 
             modelBuilder.Entity("SharedModels.Entidades.Payroll", b =>
                 {
-                    b.Property<int>("PayrollId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PayrollId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
@@ -181,7 +171,7 @@ namespace PayrollAPI.Migrations
                     b.Property<DateOnly>("StartDate")
                         .HasColumnType("date");
 
-                    b.HasKey("PayrollId");
+                    b.HasKey("Id");
 
                     b.HasIndex("EmployeeId");
 
@@ -190,40 +180,24 @@ namespace PayrollAPI.Migrations
 
             modelBuilder.Entity("SharedModels.Entidades.Deduction", b =>
                 {
-                    b.HasOne("SharedModels.Entidades.Employee", "Employee")
+                    b.HasOne("SharedModels.Entidades.Employee", "Empleado")
                         .WithMany()
-                        .HasForeignKey("EmployeeId")
+                        .HasForeignKey("EmployeeID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SharedModels.Entidades.Payroll", "Payroll")
-                        .WithMany("Deductions")
-                        .HasForeignKey("PayrollId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
-
-                    b.Navigation("Payroll");
+                    b.Navigation("Empleado");
                 });
 
             modelBuilder.Entity("SharedModels.Entidades.Income", b =>
                 {
-                    b.HasOne("SharedModels.Entidades.Employee", "Employee")
+                    b.HasOne("SharedModels.Entidades.Employee", "Empleado")
                         .WithMany()
-                        .HasForeignKey("EmployeeId")
+                        .HasForeignKey("EmployeeID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SharedModels.Entidades.Payroll", "Payroll")
-                        .WithMany("Incomes")
-                        .HasForeignKey("PayrollId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
-
-                    b.Navigation("Payroll");
+                    b.Navigation("Empleado");
                 });
 
             modelBuilder.Entity("SharedModels.Entidades.Payroll", b =>
@@ -240,13 +214,6 @@ namespace PayrollAPI.Migrations
             modelBuilder.Entity("SharedModels.Entidades.Employee", b =>
                 {
                     b.Navigation("Payrolls");
-                });
-
-            modelBuilder.Entity("SharedModels.Entidades.Payroll", b =>
-                {
-                    b.Navigation("Deductions");
-
-                    b.Navigation("Incomes");
                 });
 #pragma warning restore 612, 618
         }

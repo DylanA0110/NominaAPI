@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace SharedModels.Interfaces
 {
-    public interface IDeductionCalculationService
+    public interface IPayrollCalculationService
     {
-        decimal CalculateINSS(Employee employee);
-        decimal CalculateIR(Employee employee);
+        Payroll CalculatePayroll(Employee employee, DateOnly startDate, DateOnly endDate);
     }
 }

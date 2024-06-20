@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace SharedModels.Services
 {
-    internal class PayrollService
+    public class PayrollService
     {
+
     }
 }

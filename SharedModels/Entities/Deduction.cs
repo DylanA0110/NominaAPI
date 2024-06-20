@@ -8,11 +8,9 @@ namespace SharedModels.Entidades
 {
     public class Deduction
     {
-        public int DeductionId { get; set; }
-        public int EmployeeId { get; set; }
+        public int Id { get; set; }
         public decimal INSS { get; set; }
         public decimal IR { get; set; }
-        public Employee? Employee { get; set; }
         public int PayrollId { get; set; }
         public Payroll? Payroll { get; set; }
     }
