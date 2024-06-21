@@ -9,7 +9,7 @@ namespace SharedModels.Interfaces
 {
     public interface IDeductionCalculationService
     {
-        decimal CalculateINSS(Employee employee);
-        decimal CalculateIR(Employee employee);
+        decimal CalculateINSS(decimal totalINgresos);
+        decimal CalculateIR(decimal totalINgresos);
     }
 }

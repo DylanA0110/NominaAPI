@@ -9,9 +9,9 @@ namespace SharedModels.Interfaces
 {
     public interface IIncomeCalculationService
     {
-        decimal CalculateOrdinarySalary(Employee employee);
         decimal CalculateSeniority(Employee employee);
         decimal CalculateOccupationalRisk(Employee employee);
         decimal CalculateNightShift(Employee employee);
+        decimal CalculateOverTime(Employee employee, int overTime);
     }
 }

@@ -13,6 +13,7 @@ namespace SharedModels.Entidades
         public decimal Seniority { get; set; }
         public decimal OccupationalRisk { get; set; }
         public decimal NightShift { get; set; }
+        public decimal Overtime { get; set; }
         public int PayrollId { get; set; }
         public Payroll? Payroll { get; set; }
     }
