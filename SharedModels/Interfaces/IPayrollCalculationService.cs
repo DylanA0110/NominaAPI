@@ -9,6 +9,6 @@ namespace SharedModels.Interfaces
 {
     public interface IPayrollCalculationService
     {
-        Payroll CalculatePayroll(Employee employee, DateOnly startDate, DateOnly endDate);
+        Payroll CalculatePayroll(Employee employee, DateOnly startDate, DateOnly endDate, int overTimeHours);
     }
 }
