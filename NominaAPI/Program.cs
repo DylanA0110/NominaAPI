@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using PayrollAPI.Data;
+using PayrollAPI.Repository;
+using PayrollAPI.Repository.IRepository;
 using SharedModels;
 using SharedModels.Interfaces;
 using SharedModels.Services;
@@ -15,6 +17,10 @@ builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddScoped<IIncomeCalculationService, IncomeCalculationService>();
 builder.Services.AddScoped<IDeductionCalculationService, DeductionCalculationService>();
 builder.Services.AddScoped<IPayrollCalculationService, PayrollService>();
+builder.Services.AddScoped<IDeductionRepository, DeductionRepository>();
+builder.Services.AddScoped<IIncomeRepository, IncomeRepository>();
+builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+builder.Services.AddScoped<IPayrollRepository, PayrollRepository>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

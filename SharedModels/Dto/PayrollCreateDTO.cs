@@ -14,10 +14,10 @@ namespace SharedModels.Dto
         public int EmployeeId { get; set; }
 
         [Required(ErrorMessage = "La fecha de inicio es obligatoria.")]
-        public DateTime StartDate { get; set; }
+        public DateOnly StartDate { get; set; }
 
         [Required(ErrorMessage = "La fecha de fin es obligatoria.")]
-        public DateTime EndDate { get; set; }
+        public DateOnly EndDate { get; set; }
 
         [Required(ErrorMessage = "El salario neto es obligatorio.")]
         [Range(0, double.MaxValue, ErrorMessage = "El salario neto debe ser mayor o igual a cero.")]

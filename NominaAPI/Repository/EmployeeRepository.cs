@@ -16,13 +16,9 @@ namespace PayrollAPI.Repository
 
         public async Task<Employee> UpdateAsync(Employee entity)
         {
-            var existingEmployee = await _context.Employees.FindAsync(entity.Id);
-            if (existingEmployee != null)
-            {
-                _context.Entry(existingEmployee).CurrentValues.SetValues(entity);
-                await SaveChangesAsync();
-            }
-            return existingEmployee;
+            _context.Entry(entity).State = EntityState.Modified;
+            await SaveChangesAsync();
+            return entity;
         }
 
         public async Task<List<Employee>> SearchEmployeesAsync(string searchTerm)
