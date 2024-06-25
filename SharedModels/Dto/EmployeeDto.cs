@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SharedModels.Dto
 {
-    public class EmployeeDto
+    public class EmployeeDTO
     {
         public int Id { get; set; }
 
