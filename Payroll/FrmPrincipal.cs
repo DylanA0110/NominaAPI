@@ -7,9 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using UIPayroll.Api_Client;
 
-namespace UIPayroll
+namespace Payroll
 {
     public partial class FrmPrincipal : Form
     {

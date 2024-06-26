@@ -60,7 +60,7 @@ builder.Services.AddSwaggerGen(c=>
 {
 
     // Título (Diseño)
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Software School", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Software Payroll", Version = "v1" });
 
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {

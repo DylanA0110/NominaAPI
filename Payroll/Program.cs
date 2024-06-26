@@ -1,4 +1,4 @@
-namespace UIPayroll
+namespace Payroll
 {
     internal static class Program
     {

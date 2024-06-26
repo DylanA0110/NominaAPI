@@ -22,7 +22,6 @@ namespace PayrollAPI
             CreateMap<Payroll, PayrollCreateDTO>().ReverseMap();
             CreateMap<Payroll, PayrollUpdateDTO>().ReverseMap();
             CreateMap<User, RegisterUserDTO>().ReverseMap();
-
         }
     }
 }

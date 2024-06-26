@@ -11,6 +11,7 @@ using System.Text;
 
 namespace PayrollAPI.Controllers
 {
+
     [Route("api/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
@@ -20,7 +21,7 @@ namespace PayrollAPI.Controllers
         private readonly IConfiguration _configuration;
 
         public AuthController(IUserRepository userRepo,
-            IMapper mapper,
+        IMapper mapper,
             IConfiguration configuration)
         {
             _userRepo = userRepo;

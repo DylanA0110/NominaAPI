@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UIPayroll.Repositorios
+namespace Payroll.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {
