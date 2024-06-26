@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PayrollAPI", "NominaAPI\Pay
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedModels", "SharedModels\SharedModels.csproj", "{88A12FE0-B8DF-49CB-9DF3-55B3BAF54249}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UINomina", "UINomina\UINomina.csproj", "{EF441F2F-5694-452B-AD4D-58B9D0CB53A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UIPayroll", "UIPayroll\UIPayroll.csproj", "{2AF52144-F3CE-4DE3-88C6-DB40D6B79F61}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{88A12FE0-B8DF-49CB-9DF3-55B3BAF54249}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88A12FE0-B8DF-49CB-9DF3-55B3BAF54249}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88A12FE0-B8DF-49CB-9DF3-55B3BAF54249}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EF441F2F-5694-452B-AD4D-58B9D0CB53A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EF441F2F-5694-452B-AD4D-58B9D0CB53A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EF441F2F-5694-452B-AD4D-58B9D0CB53A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EF441F2F-5694-452B-AD4D-58B9D0CB53A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AF52144-F3CE-4DE3-88C6-DB40D6B79F61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AF52144-F3CE-4DE3-88C6-DB40D6B79F61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AF52144-F3CE-4DE3-88C6-DB40D6B79F61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AF52144-F3CE-4DE3-88C6-DB40D6B79F61}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
