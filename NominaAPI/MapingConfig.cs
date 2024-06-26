@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using SharedModels.Dto;
 using SharedModels.Entidades;
+using SharedModels.Entities;
 
 namespace PayrollAPI
 {
@@ -20,7 +21,8 @@ namespace PayrollAPI
             CreateMap<Payroll, PayrollDTO>().ReverseMap();
             CreateMap<Payroll, PayrollCreateDTO>().ReverseMap();
             CreateMap<Payroll, PayrollUpdateDTO>().ReverseMap();
-            
+            CreateMap<User, RegisterUserDTO>().ReverseMap();
+
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SharedModels.Entidades;
+using SharedModels.Entities;
 using System.Reflection;
 
 namespace PayrollAPI.Data
@@ -56,5 +57,6 @@ namespace PayrollAPI.Data
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Income> Incomes { get; set; }
         public DbSet<Deduction> Deductions { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }

@@ -32,7 +32,6 @@ namespace PayrollAPI.Controllers
             _logger = logger;
         }
 
-        [Authorize]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
