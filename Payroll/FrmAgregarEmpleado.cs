@@ -107,6 +107,11 @@ namespace Payroll
 
         private async void btnAgregarEmpleado_Click(object sender, EventArgs e)
         {
+            if(!cbActivo.Checked)
+            { 
+                MessageBox.Show("Debes seleccionar si el empleado es activo .", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                     return;
+            }
             if (!RBHombre.Checked && !RBMujer.Checked && !RBOtro.Checked)
             {
                 MessageBox.Show("Debes seleccionar el sexo del empleado.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Error);

@@ -65,7 +65,9 @@ namespace Payroll
 
         private void btnLogOut_Click(object sender, EventArgs e)
         {
-
+            FrmLogin login = new();
+            login.Show();
+            this.Hide();
         }
         private void AbrirFormHija(object formulario)
         {
@@ -95,6 +97,8 @@ namespace Payroll
      
         private void btnHome_Click(object sender, EventArgs e)
         {
+            FrmHome frmhome = new FrmHome();
+            AbrirFormHija(frmhome);
         }
         private void btnEmpleados_Click(object sender, EventArgs e)
         {
@@ -108,14 +112,7 @@ namespace Payroll
             PBMinimizar.Visible = false;
             AbrirFormHija(frmAggEmp);
         }
-        private void btnAdminEmp_Click(object sender, EventArgs e)
-        {
-        }
-        private void btnAggCargo_Click(object sender, EventArgs e)
-        {
-            
-        }
-
+       
         private void FrmPrincipal_Load(object sender, EventArgs e)
         {
             
@@ -135,14 +132,13 @@ namespace Payroll
             subMenuEmpleado.Visible = false;
         }
 
-        private void btnComisiones_Click(object sender, EventArgs e)
-        {
-           
-        }
-
+       
         private void btnPlanilla_Click(object sender, EventArgs e)
         {
-          
+            var frmAggEmp = new FrmPlanilla(_apiClient);
+            PBCerrar.Visible = false;
+            PBMinimizar.Visible = false;
+            AbrirFormHija(frmAggEmp);
         }
     }
 }
