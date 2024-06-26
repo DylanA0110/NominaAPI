@@ -18,6 +18,7 @@ namespace Payroll
         public IRepository<IncomeDTO> Incomes { get; }
         public IRepository<PayrollDTO> Payrolls { get; }
         public IUserRepository LoginUsers { get; }
+        public IUserRepository registerUsers { get; }
 
         public ApiClient()
         {
@@ -28,11 +29,25 @@ namespace Payroll
             Incomes = new Repository<IncomeDTO>(_httpClient, "Income");
             Payrolls = new Repository<PayrollDTO>(_httpClient, "Payroll");
             LoginUsers = new UserRepository(_httpClient, "Auth/login");
+            registerUsers = new UserRepository(_httpClient, "Auth/register");
+
         }
         public void SetAuthToken(string token)
         {
             _httpClient.DefaultRequestHeaders.Authorization =
                 new AuthenticationHeaderValue("Bearer", token);
+        }
+        public async Task<string> RegisterUserAndGetTokenAsync(RegisterUserDTO user)
+        {
+            try
+            {
+                var token = await registerUsers.RegisterUserAsync(user);
+                return token;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Registration failed: {ex.Message}");
+            }
         }
 
     }

@@ -93,7 +93,8 @@ namespace Payroll
 
         private void linkRegistro_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-
+            var registroForm = new FrmRegister(_apiClient);
+            registroForm.ShowDialog();
         }
         private async void btnLogin_Click(object sender, EventArgs e)
         {

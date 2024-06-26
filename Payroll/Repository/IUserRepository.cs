@@ -10,6 +10,6 @@ namespace Payroll.Repository
     public interface IUserRepository
     {
         Task<string> AuthenticateUserAsync(string username, string password);
-        Task<bool> RegisterUserAsync(RegisterUserDTO user);
+        Task<string> RegisterUserAsync(RegisterUserDTO user);
     }
 }

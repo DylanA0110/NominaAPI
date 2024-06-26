@@ -36,7 +36,7 @@ namespace SharedModels.Dto
 
         [Required(ErrorMessage = "La fecha de nacimiento es requerida.")]
         [DataType(DataType.Date)]
-        public DateTime DateOfBirth { get; set; }
+        public DateOnly DateOfBirth { get; set; }
 
         [Required(ErrorMessage = "El género es requerido.")]
         [RegularExpression(@"^[A-Za-z]+$", ErrorMessage = "El género debe contener solo letras.")]
@@ -59,10 +59,10 @@ namespace SharedModels.Dto
 
         [Required(ErrorMessage = "La fecha de contratación es requerida.")]
         [DataType(DataType.Date)]
-        public DateTime HireDate { get; set; }
+        public DateOnly HireDate { get; set; }
 
         [DataType(DataType.Date)]
-        public DateTime? TerminationDate { get; set; }
+        public DateOnly? TerminationDate { get; set; }
 
         [Required(ErrorMessage = "El estado activo es requerido.")]
         public bool IsActive { get; set; }

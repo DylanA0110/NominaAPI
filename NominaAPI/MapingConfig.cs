@@ -22,6 +22,14 @@ namespace PayrollAPI
             CreateMap<Payroll, PayrollCreateDTO>().ReverseMap();
             CreateMap<Payroll, PayrollUpdateDTO>().ReverseMap();
             CreateMap<User, RegisterUserDTO>().ReverseMap();
+            CreateMap<EmployeeCreateDTO, Employee>()
+              .ForMember(dest => dest.DateOfBirth, opt => opt.MapFrom(src => src.DateOfBirth));
+
+            CreateMap<EmployeeUpdateDTO, Employee>()
+                .ForMember(dest => dest.DateOfBirth, opt => opt.MapFrom(src => src.DateOfBirth));
+
+            CreateMap<Employee, EmployeeDTO>()
+                .ForMember(dest => dest.DateOfBirth, opt => opt.MapFrom(src => src.DateOfBirth));
         }
     }
 }

@@ -32,7 +32,6 @@ namespace PayrollAPI.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterUserDTO model)
         {
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

@@ -3,6 +3,7 @@ using SharedModels.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -43,14 +44,23 @@ namespace Payroll.Repository
             }
         }
 
-        public async Task<bool> RegisterUserAsync(RegisterUserDTO user)
+        public async Task<string> RegisterUserAsync(RegisterUserDTO user)
         {
             var json = JsonConvert.SerializeObject(user);
-            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PostAsync(_endpoint + "/register", content);
+            var response = await _httpClient.PostAsync(_endpoint, content);
 
-            return response.IsSuccessStatusCode;
+            if (response.IsSuccessStatusCode)
+            {
+                var responseData = await response.Content.ReadAsStringAsync();
+                var token = JsonConvert.DeserializeObject<dynamic>(responseData).token;
+                return token;
+            }
+            else
+            {
+                throw new Exception($"Failed to register user. Server returned status code: {response.StatusCode}");
+            }
         }
 
       
