@@ -8,5 +8,6 @@ namespace PayrollAPI.Repository.IRepository
         Task<User> GetUserByIdAsync(int id);
         Task<bool> ValidateUserAsync(string userName, string password);
         Task RegisterUserAsync(User user, string password);
+        
     }
 }

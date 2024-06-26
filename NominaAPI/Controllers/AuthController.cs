@@ -32,6 +32,7 @@ namespace PayrollAPI.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterUserDTO model)
         {
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -39,15 +40,20 @@ namespace PayrollAPI.Controllers
 
             try
             {
+                var existingUser = await _userRepo.GetUserByUserNameAsync(model.UserName);
+                if (existingUser != null)
+                {
+                    return BadRequest(new { message = "Username already exists" });
+                }
+
                 var user = _mapper.Map<User>(model);
 
                 await _userRepo.RegisterUserAsync(user, model.Password);
                 return Ok("User registered successfully");
             }
-            catch (ApplicationException ex)
+            catch (Exception ex)
             {
                 return BadRequest(new { message = ex.Message });
-                throw;
             }
         }
 

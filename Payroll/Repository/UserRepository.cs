@@ -42,5 +42,17 @@ namespace Payroll.Repository
                 throw new Exception("Invalid credentials");
             }
         }
+
+        public async Task<bool> RegisterUserAsync(RegisterUserDTO user)
+        {
+            var json = JsonConvert.SerializeObject(user);
+            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PostAsync(_endpoint + "/register", content);
+
+            return response.IsSuccessStatusCode;
+        }
+
+      
     }
 }
