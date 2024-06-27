@@ -15,7 +15,7 @@ namespace SharedModels.Entidades
         public decimal NetSalary { get; set; }
 
         public Employee? Employee { get; set; }
-        public ICollection<Income>? Incomes { get; set; }
-        public ICollection<Deduction>? Deductions { get; set; }
+        public List<Income>? Incomes { get; set; }
+        public List<Deduction>? Deductions { get; set; }
     }
 }

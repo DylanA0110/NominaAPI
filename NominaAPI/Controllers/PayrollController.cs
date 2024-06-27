@@ -101,47 +101,54 @@ namespace PayrollAPI.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<PayrollDTO>> PostPayroll([FromBody] PayrollCreateDTO createDto, [FromQuery] int overTimeHours)
+        public async Task<ActionResult<PayrollDTO>> CreatePayroll([FromBody] PayrollCreateDTO createDto, [FromQuery] int overTime)
         {
             if (createDto == null)
             {
-                _logger.LogError("Se recibió una solicitud de nómina nula.");
-                return BadRequest("Los datos de la nómina no pueden ser nulos.");
+                _logger.LogError("Payroll creation failed due to empty request body");
+                return BadRequest(ModelState);
+            }
+
+            if (!ModelState.IsValid)
+            {
+                _logger.LogError("Payroll creation failed due to invalid model state");
+                return BadRequest(ModelState);
             }
 
             try
             {
-                _logger.LogInformation($"Creando una nueva nómina para el empleado con ID: {createDto.EmployeeId}");
+                _logger.LogInformation("Creating a new payroll");
 
-                // Verificar si el empleado existe
                 var employee = await _employeeRepository.GetById(createDto.EmployeeId);
                 if (employee == null)
                 {
-                    _logger.LogWarning($"No se encontró ningún empleado con ID: {createDto.EmployeeId}");
-                    return BadRequest("Empleado no encontrado.");
+                    _logger.LogError($"Employee with ID {createDto.EmployeeId} not found");
+                    return NotFound($"Employee with ID {createDto.EmployeeId} not found");
                 }
 
-                // Realizar cálculo de la nómina
-                var newPayroll = _payrollService.CalculatePayroll(
-                    employee,
-                    createDto.StartDate,
-                    createDto.EndDate,
-                    overTimeHours);
+                var payroll = _payrollService.CalculatePayroll(employee, createDto.StartDate, createDto.EndDate, overTime);
 
-                // Guardar la nueva nómina
-                await _payrollRepository.CreateAsync(newPayroll);
+                await _payrollRepository.CreateAsync(payroll);
 
-                _logger.LogInformation($"Nueva nómina creada para el empleado con ID: {createDto.EmployeeId}");
+                foreach (var income in payroll.Incomes)
+                {
+                    await _incomeRepository.CreateAsync(income);
+                }
 
-                return CreatedAtAction(nameof(GetPayroll), new { id = newPayroll.Id }, _mapper.Map<PayrollDTO>(newPayroll));
+                foreach (var deduction in payroll.Deductions)
+                {
+                    await _deductionRepository.CreateAsync(deduction);
+                }
+
+                return CreatedAtRoute("GetPayroll", new { id = payroll.Id }, _mapper.Map<PayrollDTO>(payroll));
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error al crear una nueva nómina: {ex.Message}");
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    "Error interno del servidor al crear una nueva nómina.");
+                _logger.LogError($"Error creating payroll: {ex.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Internal server error");
             }
         }
+
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

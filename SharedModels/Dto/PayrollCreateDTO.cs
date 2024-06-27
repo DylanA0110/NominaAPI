@@ -22,5 +22,7 @@ namespace SharedModels.Dto
         [Required(ErrorMessage = "El salario neto es obligatorio.")]
         [Range(0, double.MaxValue, ErrorMessage = "El salario neto debe ser mayor o igual a cero.")]
         public decimal NetSalary { get; set; }
+        public List<IncomeCreateDTO> Incomes { get; set; }
+        public List<DeductionCreateDTO> Deductions { get; set; }
     }
 }

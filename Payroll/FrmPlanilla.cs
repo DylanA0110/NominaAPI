@@ -77,81 +77,64 @@ namespace Payroll
         }
         private async void btnCalcular_Click(object sender, EventArgs e)
         {
-            if (_selectedEmployee != null && ValidateInput())
+            if (ValidateInput())
             {
-                try
+                var payrollCreateDTO = new PayrollCreateDTO
                 {
-                    int overtimeHours = Convert.ToInt32(txtHora.Text);
-                    DateOnly startDate = DateOnly.FromDateTime(dtpFecha.Value);
-                    DateOnly endDate = DateOnly.FromDateTime(dtpFechaFin.Value);
+                    EmployeeId = _selectedEmployee.Id,
+                    StartDate = DateOnly.FromDateTime(dtpFecha.Value),
+                    EndDate = DateOnly.FromDateTime(dtpFechaFin.Value)
+                };
+                int horas = Convert.ToInt32(txtHora.Text);
+                    // Crear la nómina
+                    var response = await _apiClient.CreatePayrollAsync(payrollCreateDTO, horas);
 
-                    // Obtener o crear la nómina para el empleado y período especificado
-                    var payrollCreateDto = new PayrollCreateDTO
+                    // Verificar si el objeto response no es nulo y contiene el ID de la nómina creada
+                    if (response != null && response.Id > 0)
                     {
-                        EmployeeId = _selectedEmployee.Id,
-                        StartDate = startDate,
-                        EndDate = endDate
-                    };
+                        // Obtener detalles de ingresos
+                        var incomesResponse = await _apiClient.GetIncomesByPayrollIdAsync(response.Id);
 
-                    // Realizar la solicitud HTTP POST para crear la nómina
-                    var createdPayrollResponse = await _apiClient.CreatePayrollAsync(payrollCreateDto, overtimeHours);
+                        // Obtener detalles de deducciones
+                        var deductionsResponse = await _apiClient.GetDeductionsByPayrollIdAsync(response.Id);
 
-                    if (createdPayrollResponse.IsSuccessStatusCode)
-                    {
-                        // Obtener el ID de la nómina creada
-                        var responseContent = await createdPayrollResponse.Content.ReadAsStringAsync();
-                        int payrollId = int.Parse(responseContent);
+                        // Limpiar el DataGridView dgvNomina si es necesario
+                        dgvNomina.Rows.Clear();
 
-                        // Mostrar mensaje de éxito si se han cargado datos
-                        MessageBox.Show("Datos de nómina calculados y guardados correctamente.",
-                                        "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        // Agregar los ingresos al DataGridView dgvNomina
+                        foreach (var income in incomesResponse)
+                        {
+                            dgvNomina.Rows.Add(
+                                income.Id,
+                                income.OrdinarySalary,
+                                income.Seniority,
+                                income.OccupationalRisk,
+                                income.NightShift,
+                                income.Overtime
+                            );
+                        }
 
-                        // Opcional: Cargar o mostrar detalles adicionales si es necesario
-                        // Puedes realizar operaciones adicionales aquí si deseas mostrar detalles específicos
-
-                        // Actualizar el DataGridView u otros controles según sea necesario
-                        await RefreshPayrollDataGrid(payrollId);
+                        // Agregar las deducciones al DataGridView dgvNomina
+                        foreach (var deduction in deductionsResponse)
+                        {
+                            dgvNomina.Rows.Add(
+                                deduction.Id,
+                                deduction.INSS,
+                                deduction.IR
+                            );
+                        }
                     }
                     else
                     {
-                        // Manejar caso de fallo en la creación de la nómina
-                        MessageBox.Show("Error al guardar los datos de la nómina. Por favor, inténtelo nuevamente.",
-                                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("No se encontró la nómina creada o no se devolvió un ID válido.");
                     }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error al calcular y guardar los datos de la nómina: {ex.Message}",
-                                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            else
-            {
-                MessageBox.Show("Por favor, seleccione un empleado y especifique las fechas de inicio y fin del período.",
-                                "Datos incompletos", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+               
+               
         }
 
-        private async Task RefreshPayrollDataGrid(int payrollId)
-        {
-            try
-            {
-                // Aquí deberías llamar a tu API para obtener los detalles de la nómina específica usando el payrollId
-                var payrollDetails = await _apiClient.Payrolls.GetByIdAsync(payrollId);
-
-                // Suponiendo que tienes un método o propiedad en tu formulario para mostrar los detalles en dgvNomina
-                dgvNomina.DataSource = null; // Limpiar datos anteriores si es necesario
-                dgvNomina.DataSource = new List<PayrollDTO> { payrollDetails }; // Usar tu DTO adecuado
-
-                // Opcionalmente, puedes ajustar las columnas si es necesario
-                dgvNomina.AutoResizeColumns();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error al actualizar datos de nómina en el DataGridView: {ex.Message}",
-                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
+
+        
 
         private bool ValidateInput()
         {

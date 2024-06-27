@@ -19,5 +19,22 @@ namespace PayrollAPI.Repository
             await SaveChangesAsync();
             return entity;
         }
+        public async Task<IEnumerable<Income>> GetByPayrollIdAsync(int payrollId)
+        {
+            try
+            {
+                // Implementación para buscar ingresos por ID de nómina
+                var incomes = await _context.Incomes
+                    .Where(i => i.PayrollId == payrollId)
+                    .ToListAsync();
+
+                return incomes;
+            }
+            catch (Exception ex)
+            {
+                // Manejar excepciones según sea necesario
+                throw new Exception($"Error al obtener ingresos por ID de nómina {payrollId}: {ex.Message}");
+            }
+        }
     }
 }

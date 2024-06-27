@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using PayrollAPI.Repository;
 using PayrollAPI.Repository.IRepository;
 using SharedModels.Dto;
 using SharedModels.Entidades;
@@ -23,6 +24,33 @@ namespace PayrollAPI.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet("{payrollId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<IEnumerable<DeductionDTO>>> GetDeductionsByPayrollId(int payrollId)
+        {
+            try
+            {
+                _logger.LogInformation($"Obteniendo deducciones para la nómina con ID: {payrollId}");
+
+                var deductions = await _deductionRepo.GetByPayrollIdAsync(payrollId);
+
+                if (deductions == null || !deductions.Any())
+                {
+                    _logger.LogWarning($"No se encontraron deducciones para la nómina con ID: {payrollId}");
+                    return NotFound("No se encontraron deducciones para la nómina especificada.");
+                }
+
+                return Ok(_mapper.Map<IEnumerable<DeductionDTO>>(deductions));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error al obtener deducciones para la nómina con ID {payrollId}: {ex.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error interno del servidor al obtener deducciones.");
+            }
+        }
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

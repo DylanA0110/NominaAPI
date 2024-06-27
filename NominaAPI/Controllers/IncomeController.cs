@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using PayrollAPI.Repository;
 using PayrollAPI.Repository.IRepository;
 using SharedModels.Dto;
 using SharedModels.Entidades;
@@ -21,6 +22,26 @@ namespace PayrollAPI.Controllers
             _incomeRepo = incomeRepo;
             _logger = logger;
             _mapper = mapper;
+        }
+        [HttpGet("{payrollId}")]
+        public async Task<ActionResult<IncomeDTO>> GetIncomeByPayrollId(int payrollId)
+        {
+            try
+            {
+                var income = await _incomeRepo.GetByPayrollIdAsync(payrollId);
+
+                if (income == null)
+                {
+                    return NotFound($"Income not found for payroll ID {payrollId}");
+                }
+
+                return Ok(income);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    $"Error interno del servidor al obtener ingresos para la nómina con ID {payrollId}: {ex.Message}");
+            }
         }
 
         [HttpGet]

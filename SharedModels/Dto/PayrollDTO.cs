@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SharedModels.Entidades;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -23,5 +24,7 @@ namespace SharedModels.Dto
         [Required(ErrorMessage = "El salario neto es obligatorio.")]
         [Range(0, double.MaxValue, ErrorMessage = "El salario neto debe ser mayor o igual a cero.")]
         public decimal NetSalary { get; set; }
+        public List<Income>? Incomes { get; set; }
+        public List<Deduction>? Deductions { get; set; }
     }
 }
